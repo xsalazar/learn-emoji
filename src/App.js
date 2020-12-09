@@ -8,47 +8,17 @@ class App extends React.Component {
 
     this.state = {
       error: null,
-      isLoaded: false,
+      isLoaded: true,
       emojis: [],
     };
   }
 
-  componentDidMount() {
-    fetch(
-      `https://emoji-api.com/emojis?access_key=${process.env.REACT_APP_OPEN_EMOJI_API_KEY}`
-    )
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            emojis: result.filter(
-              (e) => !new RegExp(/e[0-9]+-[0-9]+-/, "i").test(e.slug)
-            ),
-            isLoaded: true,
-          });
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error,
-          });
-        }
-      );
-  }
-
   render() {
-    const { error, isLoaded, emojis } = this.state;
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-      return <div>Loading...</div>;
-    } else {
-      return (
-        <div className="App">
-          <Emoji emojis={emojis}></Emoji>
-        </div>
-      );
-    }
+    return (
+      <div className="App">
+        <Emoji></Emoji>
+      </div>
+    );
   }
 }
 
