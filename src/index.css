@@ -1,4 +1,5 @@
 body {
+  background-color: var(--background-color);
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -10,4 +11,14 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+:root {
+  --background-color: var(--platinum);
+
+  --maximum-blue-green: hsla(180, 47%, 56%, 1);
+  --plump-purple: hsla(247, 37%, 45%, 1);
+  --platinum: hsla(0, 0%, 92%, 1);
+  --ash-gray: hsla(97, 13%, 80%, 1);
+  --dark-sea-green: hsla(133, 18%, 59%, 1);
 }
