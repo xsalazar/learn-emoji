@@ -1,6 +1,7 @@
 import "./Emoji.css";
 import React from "react";
 import _ from "lodash";
+import TextField from "@material-ui/core/TextField";
 
 class Emoji extends React.Component {
   constructor(props) {
@@ -10,13 +11,13 @@ class Emoji extends React.Component {
     this.state = {
       input: {
         value: "",
-        isCorrect: false
+        isCorrect: false,
       },
       currentEmoji: {
         link: emoji.link,
-        name: emoji.name
-      }
-    }
+        name: emoji.name,
+      },
+    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInput = this.handleInput.bind(this);
@@ -24,15 +25,22 @@ class Emoji extends React.Component {
 
   render() {
     const currentEmoji = this.state.currentEmoji;
-    const currentStatus = this.state.input.isCorrect ? "✔️": "❌";
+    const isEmpty = this.state.input.value === "";
+    const isCorrect = this.state.input.isCorrect;
 
     return (
       <div>
         <img src={currentEmoji.link} alt="emoji"></img>
         <form onSubmit={this.handleSubmit}>
-          : <input type="text" value={this.state.input.value} onInput={this.handleInput}  placeholder="Guess the emoji"></input> :
+          <TextField
+            type="text"
+            value={this.state.input.value}
+            onInput={this.handleInput}
+            label="Guess the emoji"
+            variant="outlined"
+            error={!isCorrect && !isEmpty}
+          ></TextField>
         </form>
-        {currentStatus}
       </div>
     );
   }
@@ -42,32 +50,32 @@ class Emoji extends React.Component {
     this.setState({
       currentEmoji: {
         link: emoji.link,
-        name: emoji.name
-      }
+        name: emoji.name,
+      },
     });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    
+
     this.setState({
       input: {
         value: "",
-        isCorrect: false
-      }
+        isCorrect: false,
+      },
     });
 
     this.setRandomEmoji();
   }
 
   handleInput(event) {
-    const userInput = event.target.value.replace(' ', '_');
+    const userInput = event.target.value.replace(" ", "_");
     this.setState({
       input: {
         value: userInput,
-        isCorrect: this.state.currentEmoji.name === userInput
-      }
-    })
+        isCorrect: this.state.currentEmoji.name === userInput,
+      },
+    });
   }
 }
 
