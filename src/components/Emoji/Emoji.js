@@ -39,6 +39,9 @@ class Emoji extends React.Component {
             label="Guess the emoji"
             variant="outlined"
             error={!isCorrect && !isEmpty}
+            inputProps={{
+              autoCapitalize: 'none'
+            }}
           ></TextField>
         </form>
       </div>
