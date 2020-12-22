@@ -1,5 +1,10 @@
-img {
-    width: 128px;
-    height: 128px;
+.emoji {
+    width: 256px;
+    height: 256px;
     padding-bottom: 16px;
+}
+
+.input-emoji {
+    width: 16px;
+    height: 16px;
 }

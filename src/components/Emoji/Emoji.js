@@ -1,21 +1,23 @@
 import "./Emoji.css";
 import React from "react";
 import _ from "lodash";
-import TextField from "@material-ui/core/TextField";
+import { TextField, InputAdornment } from "@material-ui/core";
+import emojis from "emoji-datasource/emoji_pretty.json";
+import twemoji from "twemoji";
 
 class Emoji extends React.Component {
   constructor(props) {
     super(props);
 
-    const emoji = _.sample(this.props.emojis);
+    const emoji = this.getEmoji();
     this.state = {
       input: {
         value: "",
         isCorrect: false,
       },
       currentEmoji: {
-        link: emoji.link,
-        name: emoji.name,
+        codePoint: emoji.unified,
+        names: emoji.short_names,
       },
     };
 
@@ -30,7 +32,7 @@ class Emoji extends React.Component {
 
     return (
       <div>
-        <img src={currentEmoji.link} alt="emoji"></img>
+        <div dangerouslySetInnerHTML={this.createEmoji(currentEmoji.codePoint)}></div>
         <form onSubmit={this.handleSubmit}>
           <TextField
             type="text"
@@ -39,8 +41,9 @@ class Emoji extends React.Component {
             label="Guess the emoji"
             variant="outlined"
             error={!isCorrect && !isEmpty}
-            inputProps={{
-              autoCapitalize: 'none'
+            InputProps={{
+              autoCapitalize: 'none',
+              endAdornment: <InputAdornment position="end" dangerouslySetInnerHTML={this.getGuessStatus(isCorrect, isEmpty)}></InputAdornment>,
             }}
           ></TextField>
         </form>
@@ -48,14 +51,53 @@ class Emoji extends React.Component {
     );
   }
 
+  createEmoji(codePoint) {
+    return {
+      __html: twemoji.parse(codePoint.split('-').map(twemoji.convert.fromCodePoint).join(''), {
+        ext: '.svg',
+        folder: 'svg',
+      })
+    };
+  }
+
+  getGuessStatus(isCorrect, isEmpty) {
+    if (isEmpty) {
+      return;
+    }
+
+    let result = '';
+    const check = '2714-FE0F';
+    const x = '274C';
+
+    if (!isEmpty && isCorrect) {
+      result = check;
+    } else {
+      result = x;
+    }
+
+    return {
+      __html: twemoji.parse(result.split('-').map(twemoji.convert.fromCodePoint).join(''), {
+        className: 'input-emoji'
+      })
+    }
+  }
+
   setRandomEmoji() {
-    const emoji = _.sample(this.props.emojis);
+    const emoji = this.getEmoji();
     this.setState({
       currentEmoji: {
-        link: emoji.link,
-        name: emoji.name,
+        codePoint: emoji.unified,
+        names: emoji.short_names,
       },
     });
+  }
+
+  getEmoji() {
+    return _.sample(emojis.filter((e) => 
+        e.category === "Smileys & Emotion" ||
+        e.category === "Animals & Nature" ||
+        e.category === "Food & Drink"
+      ))
   }
 
   handleSubmit(event) {
@@ -76,7 +118,7 @@ class Emoji extends React.Component {
     this.setState({
       input: {
         value: userInput,
-        isCorrect: this.state.currentEmoji.name === userInput,
+        isCorrect: this.state.currentEmoji.names.includes(userInput),
       },
     });
   }
