@@ -1,7 +1,8 @@
 .emoji {
-    width: 256px;
+    width: 100%;
+    max-width: 256px;
     height: 256px;
-    padding-bottom: 16px;
+    padding: 32px;
 }
 
 .input-emoji {

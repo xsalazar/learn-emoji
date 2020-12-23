@@ -1,6 +1,6 @@
 import "./Footer.css";
 import React from "react";
-import { Typography, Link, List, ListItem} from "@material-ui/core";
+import { Typography, Link, List, ListItem } from "@material-ui/core";
 import { MarkGithubIcon } from "@primer/octicons-react";
 
 const flexContainer = {
@@ -29,7 +29,9 @@ class Footer extends React.Component {
               {/* Link */}
               <ListItem alignItems="center">
                 <Typography variant="body2">
-                  <Link href="https://github.com/xsalazar/learn-emoji">Source Code</Link>
+                  <Link href="https://github.com/xsalazar/learn-emoji">
+                    Source Code
+                  </Link>
                 </Typography>
               </ListItem>
             </List>

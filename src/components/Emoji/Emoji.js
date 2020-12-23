@@ -32,7 +32,9 @@ class Emoji extends React.Component {
 
     return (
       <div>
-        <div dangerouslySetInnerHTML={this.createEmoji(currentEmoji.codePoint)}></div>
+        <div
+          dangerouslySetInnerHTML={this.createEmoji(currentEmoji.codePoint)}
+        ></div>
         <form onSubmit={this.handleSubmit}>
           <TextField
             type="text"
@@ -42,8 +44,18 @@ class Emoji extends React.Component {
             variant="outlined"
             error={!isCorrect && !isEmpty}
             InputProps={{
-              autoCapitalize: 'none',
-              endAdornment: <InputAdornment position="end" dangerouslySetInnerHTML={this.getGuessStatus(isCorrect, isEmpty)}></InputAdornment>,
+              endAdornment: (
+                <InputAdornment
+                  position="end"
+                  dangerouslySetInnerHTML={this.getGuessStatus(
+                    isCorrect,
+                    isEmpty
+                  )}
+                ></InputAdornment>
+              ),
+            }}
+            inputProps={{
+              autoCapitalize: "none",
             }}
           ></TextField>
         </form>
@@ -53,10 +65,13 @@ class Emoji extends React.Component {
 
   createEmoji(codePoint) {
     return {
-      __html: twemoji.parse(codePoint.split('-').map(twemoji.convert.fromCodePoint).join(''), {
-        ext: '.svg',
-        folder: 'svg',
-      })
+      __html: twemoji.parse(
+        codePoint.split("-").map(twemoji.convert.fromCodePoint).join(""),
+        {
+          ext: ".svg",
+          folder: "svg",
+        }
+      ),
     };
   }
 
@@ -65,9 +80,9 @@ class Emoji extends React.Component {
       return;
     }
 
-    let result = '';
-    const check = '2714-FE0F';
-    const x = '274C';
+    let result = "";
+    const check = "2714-FE0F";
+    const x = "274C";
 
     if (!isEmpty && isCorrect) {
       result = check;
@@ -76,10 +91,13 @@ class Emoji extends React.Component {
     }
 
     return {
-      __html: twemoji.parse(result.split('-').map(twemoji.convert.fromCodePoint).join(''), {
-        className: 'input-emoji'
-      })
-    }
+      __html: twemoji.parse(
+        result.split("-").map(twemoji.convert.fromCodePoint).join(""),
+        {
+          className: "input-emoji",
+        }
+      ),
+    };
   }
 
   setRandomEmoji() {
@@ -93,11 +111,14 @@ class Emoji extends React.Component {
   }
 
   getEmoji() {
-    return _.sample(emojis.filter((e) => 
-        e.category === "Smileys & Emotion" ||
-        e.category === "Animals & Nature" ||
-        e.category === "Food & Drink"
-      ))
+    return _.sample(
+      emojis.filter(
+        (e) =>
+          e.category === "Smileys & Emotion" ||
+          e.category === "Animals & Nature" ||
+          e.category === "Food & Drink"
+      )
+    );
   }
 
   handleSubmit(event) {
@@ -114,7 +135,7 @@ class Emoji extends React.Component {
   }
 
   handleInput(event) {
-    const userInput = event.target.value.replace(" ", "_");
+    const userInput = event.target.value.replace(" ", "_").toLowerCase();
     this.setState({
       input: {
         value: userInput,
