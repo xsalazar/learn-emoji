@@ -7,13 +7,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <div
-          style={{
-            gridTemplateRows: "1fr auto",
-            minHeight: "100%",
-            display: "grid",
-          }}
-        >
+        <div className="flex-wrapper">
           <Emoji />
           <Footer />
         </div>
