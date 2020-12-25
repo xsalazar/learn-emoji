@@ -1,7 +1,12 @@
 import "./Emoji.css";
 import React from "react";
 import _ from "lodash";
-import { TextField, InputAdornment } from "@material-ui/core";
+import {
+  TextField,
+  InputAdornment,
+  Switch,
+  FormControlLabel,
+} from "@material-ui/core";
 import emojis from "emoji-datasource/emoji_pretty.json";
 import twemoji from "twemoji";
 
@@ -19,10 +24,12 @@ class Emoji extends React.Component {
         codePoint: emoji.unified,
         names: emoji.short_names,
       },
+      showAnswer: false,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
   }
 
   render() {
@@ -59,6 +66,14 @@ class Emoji extends React.Component {
             }}
           ></TextField>
         </form>
+        <FormControlLabel
+          style={{ padding: "8px" }}
+          control={<Switch size="small" onChange={this.handleToggle} />}
+          label="Show answer?"
+        />
+        <div>
+          {this.state.showAnswer ? this.state.currentEmoji.names[0] : ""}
+        </div>
       </div>
     );
   }
@@ -141,6 +156,12 @@ class Emoji extends React.Component {
         value: userInput,
         isCorrect: this.state.currentEmoji.names.includes(userInput),
       },
+    });
+  }
+
+  handleToggle(event) {
+    this.setState({
+      showAnswer: !this.state.showAnswer,
     });
   }
 }
