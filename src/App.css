@@ -6,6 +6,5 @@
 .flex-wrapper {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  min-height: -webkit-fill-available;
+  min-height: calc(100vh - 56px);
 }
