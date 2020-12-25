@@ -31,7 +31,7 @@ class Emoji extends React.Component {
     const isCorrect = this.state.input.isCorrect;
 
     return (
-      <div>
+      <div style={{ flex: 1 }}>
         <div
           dangerouslySetInnerHTML={this.createEmoji(currentEmoji.codePoint)}
         ></div>
