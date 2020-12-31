@@ -1,11 +1,20 @@
 .emoji {
-    width: 100%;
-    max-width: 256px;
-    height: 256px;
-    padding: 32px;
+  width: 100%;
+  max-width: 256px;
+  height: 256px;
+  padding: 32px;
 }
 
-.input-emoji {
-    width: 16px;
-    height: 16px;
+.input-emoji-validate {
+  width: 16px;
+  height: 16px;
+}
+
+.input-emoji-form {
+  padding: 8px;
+}
+
+.emoji-column {
+  flex: 1;
+  width: 320px;
 }

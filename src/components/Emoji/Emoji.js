@@ -38,12 +38,16 @@ class Emoji extends React.Component {
     const isCorrect = this.state.input.isCorrect;
 
     return (
-      <div style={{ flex: 1 }}>
+      <div className="emoji-column">
+        {/* Emoji picture */}
         <div
           dangerouslySetInnerHTML={this.createEmoji(currentEmoji.codePoint)}
         ></div>
-        <form onSubmit={this.handleSubmit}>
+
+        {/* Emoji form input */}
+        <form onSubmit={this.handleSubmit} className="input-emoji-form">
           <TextField
+            fullWidth
             type="text"
             value={this.state.input.value}
             onInput={this.handleInput}
@@ -66,6 +70,8 @@ class Emoji extends React.Component {
             }}
           ></TextField>
         </form>
+
+        {/* Helper control to show answer */}
         <FormControlLabel
           style={{ padding: "8px" }}
           control={<Switch size="small" onChange={this.handleToggle} />}
@@ -96,20 +102,20 @@ class Emoji extends React.Component {
     }
 
     let result = "";
-    const check = "2714-FE0F";
-    const x = "274C";
+    const correct = "2714-FE0F"; // ✔
+    const incorrect = "274C"; // ❌
 
     if (!isEmpty && isCorrect) {
-      result = check;
+      result = correct;
     } else {
-      result = x;
+      result = incorrect;
     }
 
     return {
       __html: twemoji.parse(
         result.split("-").map(twemoji.convert.fromCodePoint).join(""),
         {
-          className: "input-emoji",
+          className: "input-emoji-validate",
         }
       ),
     };
