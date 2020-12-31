@@ -56,6 +56,7 @@ class Emoji extends React.Component {
             value={this.state.input.value}
             onInput={this.handleInput}
             label="Guess the emoji"
+            id="Guess the emoji"
             variant="outlined"
             error={!isCorrect && !isEmpty}
             InputProps={{
