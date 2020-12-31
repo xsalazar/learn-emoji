@@ -45,7 +45,11 @@ class Emoji extends React.Component {
         ></div>
 
         {/* Emoji form input */}
-        <form onSubmit={this.handleSubmit} className="input-emoji-form">
+        <form
+          onSubmit={this.handleSubmit}
+          className="input-emoji-form"
+          label="Guess the emoji"
+        >
           <TextField
             fullWidth
             type="text"
