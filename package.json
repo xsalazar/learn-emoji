@@ -5,7 +5,7 @@
   "homepage": "https://learnemoji.dev",
   "dependencies": {
     "@material-ui/core": "^4.11.4",
-    "@primer/octicons-react": "^14.2.1",
+    "@primer/octicons-react": "^14.2.2",
     "@testing-library/jest-dom": "^5.13.0",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^13.1.9",
