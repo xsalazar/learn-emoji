@@ -4,8 +4,6 @@ object-assign
 @license MIT
 */
 
-/*! Copyright Twitter Inc. and other contributors. Licensed under MIT */
-
 /**
  * @license
  * Lodash <https://lodash.com/>
