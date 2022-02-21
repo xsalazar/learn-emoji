@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - main
-  workflow_run:
-    workflows: ["Dependabot PR Check"]
-    types:
-      - completed
   workflow_dispatch:
 
 jobs:
@@ -32,6 +28,6 @@ jobs:
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
-          BRANCH: gh-pages
-          FOLDER: build
+          branch: gh-pages
+          folder: build
           CLEAN: true # Automatically remove deleted files from the deploy branch
