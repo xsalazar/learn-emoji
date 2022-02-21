@@ -55,7 +55,7 @@ export default class Emoji extends React.Component<EmojiProps, EmojiState> {
     const isCorrect = this.state.input.isCorrect;
 
     return (
-      <div style={{ height: "calc(100vh - 200px)" }}>
+      <div style={{ minHeight: "calc(100vh - 200px)" }}>
         <Container maxWidth="xs">
           {/* Emoji picture */}
           <Box sx={{ py: 4 }}>
@@ -70,7 +70,7 @@ export default class Emoji extends React.Component<EmojiProps, EmojiState> {
               <TextField
                 variant="outlined"
                 fullWidth
-                helperText="Press return (⮑) to try another"
+                helperText="Press return to try another"
                 label="Guess the emoji"
                 value={this.state.input.value}
                 onChange={this.handleInput}
@@ -82,6 +82,9 @@ export default class Emoji extends React.Component<EmojiProps, EmojiState> {
                       {!isEmpty && !isCorrect && <Close />}
                     </InputAdornment>
                   ),
+                }}
+                inputProps={{
+                  autoCapitalize: "none",
                 }}
               ></TextField>
             </form>
