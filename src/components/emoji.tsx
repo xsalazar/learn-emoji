@@ -6,6 +6,7 @@ import {
   InputAdornment,
   Container,
   Typography,
+  IconButton,
   Box,
 } from "@mui/material";
 import { Close, Check } from "@mui/icons-material";
@@ -47,6 +48,7 @@ export default class Emoji extends React.Component<EmojiProps, EmojiState> {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+    this.handleClear = this.handleClear.bind(this);
   }
 
   render() {
@@ -79,7 +81,11 @@ export default class Emoji extends React.Component<EmojiProps, EmojiState> {
                   endAdornment: (
                     <InputAdornment position="end">
                       {isCorrect && <Check />}
-                      {!isEmpty && !isCorrect && <Close />}
+                      {!isEmpty && !isCorrect && (
+                        <IconButton onClick={this.handleClear}>
+                          <Close />
+                        </IconButton>
+                      )}
                     </InputAdornment>
                   ),
                 }}
@@ -165,6 +171,15 @@ export default class Emoji extends React.Component<EmojiProps, EmojiState> {
   handleToggle() {
     this.setState({
       showAnswer: !this.state.showAnswer,
+    });
+  }
+
+  handleClear() {
+    this.setState({
+      input: {
+        value: "",
+        isCorrect: false,
+      },
     });
   }
 }
