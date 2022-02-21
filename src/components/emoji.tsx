@@ -62,6 +62,7 @@ export default class Emoji extends React.Component<EmojiProps, EmojiState> {
           {/* Emoji picture */}
           <Box sx={{ py: 4, width: "auto", aspectRatio: "1" }}>
             <div
+              style={{ display: "grid" }}
               dangerouslySetInnerHTML={this.createEmoji(currentEmoji.codePoint)}
             ></div>
           </Box>
