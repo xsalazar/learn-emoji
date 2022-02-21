@@ -60,7 +60,7 @@ export default class Emoji extends React.Component<EmojiProps, EmojiState> {
       <div style={{ minHeight: "calc(100vh - 200px)" }}>
         <Container maxWidth="xs">
           {/* Emoji picture */}
-          <Box sx={{ py: 4 }}>
+          <Box sx={{ py: 4, width: "auto", aspectRatio: "1" }}>
             <div
               dangerouslySetInnerHTML={this.createEmoji(currentEmoji.codePoint)}
             ></div>
