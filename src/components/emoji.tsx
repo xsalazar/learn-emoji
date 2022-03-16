@@ -119,14 +119,19 @@ export default class Emoji extends React.Component<EmojiProps, EmojiState> {
   }
 
   createEmoji(codePoint: string) {
+    const div = document.createElement("div");
+    div.textContent = codePoint
+      .split("-")
+      .map(twemoji.convert.fromCodePoint)
+      .join("");
+
+    twemoji.parse(div, {
+      ext: ".svg",
+      folder: "svg",
+    });
+
     return {
-      __html: twemoji.parse(
-        codePoint.split("-").map(twemoji.convert.fromCodePoint).join(""),
-        {
-          ext: ".svg",
-          folder: "svg",
-        }
-      ),
+      __html: div.innerHTML,
     };
   }
 
