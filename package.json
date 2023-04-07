@@ -17,7 +17,7 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "twemoji": "^14.0.2",
-    "typescript": "^5.0.3"
+    "typescript": "^5.0.4"
   },
   "devDependencies": {
     "@types/twemoji": "^13.1.2"
