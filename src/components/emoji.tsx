@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { Close, Check } from "@mui/icons-material";
 import emojiDatasource from "emoji-datasource/emoji_pretty.json";
-import twemoji from "twemoji";
+import twemoji from "@twemoji/api";
 
 interface EmojiProps {}
 
@@ -61,10 +61,10 @@ export default class Emoji extends React.Component<EmojiProps, EmojiState> {
         <Container maxWidth="xs">
           {/* Emoji picture */}
           <Box sx={{ py: 4, width: "auto", aspectRatio: "1" }}>
-            <div
-              style={{ display: "grid" }}
-              dangerouslySetInnerHTML={this.createEmoji(currentEmoji.codePoint)}
-            ></div>
+            {React.createElement("img", {
+              src: this.createEmoji(currentEmoji.codePoint),
+              width: "100%",
+            })}
           </Box>
 
           {/* Emoji form input */}
@@ -120,6 +120,7 @@ export default class Emoji extends React.Component<EmojiProps, EmojiState> {
 
   createEmoji(codePoint: string) {
     const div = document.createElement("div");
+
     div.textContent = codePoint
       .split("-")
       .map(twemoji.convert.fromCodePoint)
@@ -128,12 +129,10 @@ export default class Emoji extends React.Component<EmojiProps, EmojiState> {
     twemoji.parse(div, {
       ext: ".svg",
       folder: "svg",
-      base: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/",
+      base: "https://cdn.jsdelivr.net/gh/jdecked/twemoji@latest/assets/",
     });
 
-    return {
-      __html: div.innerHTML,
-    };
+    return div.getElementsByTagName("img")[0].src;
   }
 
   setRandomEmoji() {
