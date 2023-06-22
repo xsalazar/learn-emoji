@@ -57,64 +57,62 @@ export default class Emoji extends React.Component<EmojiProps, EmojiState> {
     const isCorrect = this.state.input.isCorrect;
 
     return (
-      <div style={{ minHeight: "calc(100vh - 200px)" }}>
-        <Container maxWidth="xs">
-          {/* Emoji picture */}
-          <Box sx={{ py: 4, width: "auto", aspectRatio: "1" }}>
-            {React.createElement("img", {
-              src: this.createEmoji(currentEmoji.codePoint),
-              width: "100%",
-            })}
-          </Box>
+      <Container maxWidth="xs" sx={{ flexGrow: "1" }}>
+        {/* Emoji picture */}
+        <Box sx={{ py: 4, width: "auto", aspectRatio: "1" }}>
+          {React.createElement("img", {
+            src: this.createEmoji(currentEmoji.codePoint),
+            width: "100%",
+          })}
+        </Box>
 
-          {/* Emoji form input */}
-          <Box sx={{ pb: 4 }}>
-            <form onSubmit={this.handleSubmit}>
-              <TextField
-                variant="outlined"
-                fullWidth
-                helperText="Press return to try another"
-                label="Guess the emoji"
-                value={this.state.input.value}
-                onChange={this.handleInput}
-                error={!isCorrect && !isEmpty}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      {isCorrect && <Check />}
-                      {!isEmpty && !isCorrect && (
-                        <IconButton onClick={this.handleClear}>
-                          <Close />
-                        </IconButton>
-                      )}
-                    </InputAdornment>
-                  ),
-                }}
-                inputProps={{
-                  autoCapitalize: "none",
-                }}
-              ></TextField>
-            </form>
-          </Box>
+        {/* Emoji form input */}
+        <Box sx={{ pb: 4 }}>
+          <form onSubmit={this.handleSubmit}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              helperText="Press return to try another"
+              label="Guess the emoji"
+              value={this.state.input.value}
+              onChange={this.handleInput}
+              error={!isCorrect && !isEmpty}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    {isCorrect && <Check />}
+                    {!isEmpty && !isCorrect && (
+                      <IconButton onClick={this.handleClear}>
+                        <Close />
+                      </IconButton>
+                    )}
+                  </InputAdornment>
+                ),
+              }}
+              inputProps={{
+                autoCapitalize: "none",
+              }}
+            ></TextField>
+          </form>
+        </Box>
 
-          {/* Helper control to show answer */}
-          <Box sx={{ pb: 2, textAlign: "center" }}>
-            <FormControlLabel
-              control={<Switch size="small" onChange={this.handleToggle} />}
-              label="Show answer?"
-            />
-          </Box>
+        {/* Helper control to show answer */}
+        <Box sx={{ pb: 2, textAlign: "center" }}>
+          <FormControlLabel
+            control={<Switch size="small" onChange={this.handleToggle} />}
+            label="Show answer?"
+          />
+        </Box>
 
-          {/* The answer, if enabled */}
-          {this.state.showAnswer && (
-            <Box sx={{ textAlign: "center" }}>
-              <Typography variant="caption">
-                {this.state.currentEmoji.names[0]}
-              </Typography>
-            </Box>
-          )}
-        </Container>
-      </div>
+        {/* The answer, if enabled */}
+        {this.state.showAnswer && (
+          <Box sx={{ textAlign: "center" }}>
+            <Typography variant="caption">
+              {this.state.currentEmoji.names[0]}
+            </Typography>
+          </Box>
+        )}
+      </Container>
     );
   }
 

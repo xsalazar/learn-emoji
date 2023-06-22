@@ -5,7 +5,14 @@ import Footer from "./components/footer";
 export default class App extends React.Component {
   render() {
     return (
-      <div>
+      <div
+        style={{
+          minHeight: "100dvh",
+          maxHeight: "100dvh",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <Emoji />
         <Footer />
       </div>
