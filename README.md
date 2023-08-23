@@ -1,6 +1,6 @@
 # 📚 Learn Emoji
 
-This repository contains the source code for the website [https://learnemoji.dev](https://learnemoji.dev) and was bootstrapped using [`create-react-app`](https://github.com/facebook/create-react-app).
+This repository contains the source code for the website [https://learnemoji.dev](https://learnemoji.dev).
 
 This website is a simple guessing game where an emoji is shown and the user types in a guess.
 
