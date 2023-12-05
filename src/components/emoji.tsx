@@ -60,10 +60,11 @@ export default class Emoji extends React.Component<EmojiProps, EmojiState> {
       <Container maxWidth="xs" sx={{ flexGrow: "1" }}>
         {/* Emoji picture */}
         <Box sx={{ py: 4, width: "auto", aspectRatio: "1" }}>
-          {React.createElement("img", {
-            src: this.createEmoji(currentEmoji.codePoint),
-            width: "100%",
-          })}
+          <img
+            width="100%"
+            loading="lazy"
+            src={this.createEmoji(currentEmoji.codePoint)}
+          ></img>
         </Box>
 
         {/* Emoji form input */}
@@ -120,14 +121,14 @@ export default class Emoji extends React.Component<EmojiProps, EmojiState> {
     const div = document.createElement("div");
 
     div.textContent = codePoint
+      .toLowerCase()
       .split("-")
-      .map(twemoji.convert.fromCodePoint)
+      .map((parts) => twemoji.convert.fromCodePoint(parts))
       .join("");
 
     twemoji.parse(div, {
       ext: ".svg",
       folder: "svg",
-      base: "https://cdn.jsdelivr.net/gh/jdecked/twemoji@latest/assets/",
     });
 
     return div.getElementsByTagName("img")[0].src;
