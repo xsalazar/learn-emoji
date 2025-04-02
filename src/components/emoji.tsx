@@ -1,123 +1,35 @@
-import React from "react";
-import {
-  TextField,
-  Switch,
-  FormControlLabel,
-  InputAdornment,
-  Container,
-  Typography,
-  IconButton,
-  Box,
-} from "@mui/material";
+import React, { useState } from "react";
+
 import { Close, Check } from "@mui/icons-material";
 import emojiDatasource from "emoji-datasource/emoji_pretty.json";
 import twemoji from "@twemoji/api";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
 
-interface EmojiProps {}
+export default function Emoji() {
+  const getEmoji = () => {
+    const possibleEmojis = emojiDatasource.filter((e) => e.sort_order !== 152); // Filter out eye in speech bubble. See: https://git.io/JDj18
+    return possibleEmojis[Math.floor(Math.random() * possibleEmojis.length)];
+  };
 
-interface EmojiState {
-  currentEmoji: {
+  const emoji = getEmoji();
+  const [input, setInput] = useState<{ value: string; isCorrect: boolean }>({
+    value: "",
+    isCorrect: false,
+  });
+  const [currentEmoji, setCurrentEmoji] = useState<{
     codePoint: string;
     names: Array<string>;
-  };
-  input: {
-    value: string;
-    isCorrect: boolean;
-  };
-  showAnswer: boolean;
-}
+  }>({ codePoint: emoji.unified, names: emoji.short_names });
+  const [showAnswer, setShowAnswer] = useState(false);
 
-export default class Emoji extends React.Component<EmojiProps, EmojiState> {
-  constructor(props: EmojiProps) {
-    super(props);
-
-    const emoji = this.getEmoji();
-
-    this.state = {
-      input: {
-        value: "",
-        isCorrect: false,
-      },
-      currentEmoji: {
-        codePoint: emoji.unified,
-        names: emoji.short_names,
-      },
-      showAnswer: false,
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleInput = this.handleInput.bind(this);
-    this.handleToggle = this.handleToggle.bind(this);
-    this.handleClear = this.handleClear.bind(this);
-  }
-
-  render() {
-    const currentEmoji = this.state.currentEmoji;
-    const isEmpty = this.state.input.value === "";
-    const isCorrect = this.state.input.isCorrect;
-
-    return (
-      <Container maxWidth="xs" sx={{ flexGrow: "1" }}>
-        {/* Emoji picture */}
-        <Box sx={{ py: 4, width: "auto", aspectRatio: "1" }}>
-          <img
-            width="100%"
-            loading="lazy"
-            src={this.createEmoji(currentEmoji.codePoint)}
-          ></img>
-        </Box>
-
-        {/* Emoji form input */}
-        <Box sx={{ pb: 4 }}>
-          <form onSubmit={this.handleSubmit}>
-            <TextField
-              variant="outlined"
-              fullWidth
-              helperText="Press return to try another"
-              label="Guess the emoji"
-              value={this.state.input.value}
-              onChange={this.handleInput}
-              error={!isCorrect && !isEmpty}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    {isCorrect && <Check />}
-                    {!isEmpty && !isCorrect && (
-                      <IconButton onClick={this.handleClear}>
-                        <Close />
-                      </IconButton>
-                    )}
-                  </InputAdornment>
-                ),
-              }}
-              inputProps={{
-                autoCapitalize: "none",
-              }}
-            ></TextField>
-          </form>
-        </Box>
-
-        {/* Helper control to show answer */}
-        <Box sx={{ pb: 2, textAlign: "center" }}>
-          <FormControlLabel
-            control={<Switch size="small" onChange={this.handleToggle} />}
-            label="Show answer?"
-          />
-        </Box>
-
-        {/* The answer, if enabled */}
-        {this.state.showAnswer && (
-          <Box sx={{ textAlign: "center" }}>
-            <Typography variant="caption">
-              {this.state.currentEmoji.names[0]}
-            </Typography>
-          </Box>
-        )}
-      </Container>
-    );
-  }
-
-  createEmoji(codePoint: string) {
+  const createEmoji = (codePoint: string) => {
     const div = document.createElement("div");
 
     div.textContent = codePoint
@@ -132,59 +44,93 @@ export default class Emoji extends React.Component<EmojiProps, EmojiState> {
     });
 
     return div.getElementsByTagName("img")[0].src;
-  }
+  };
 
-  setRandomEmoji() {
-    const emoji = this.getEmoji();
-    this.setState({
-      currentEmoji: {
-        codePoint: emoji.unified,
-        names: emoji.short_names,
-      },
-    });
-  }
+  const setRandomEmoji = () => {
+    const emoji = getEmoji();
+    setCurrentEmoji({ codePoint: emoji.unified, names: emoji.short_names });
+  };
 
-  getEmoji() {
-    const possibleEmojis = emojiDatasource.filter((e) => e.sort_order !== 152); // Filter out eye in speech bubble. See: https://git.io/JDj18
-    return possibleEmojis[Math.floor(Math.random() * possibleEmojis.length)];
-  }
-
-  handleSubmit(event: React.SyntheticEvent) {
+  const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
+    setInput({ value: "", isCorrect: false });
+    setRandomEmoji();
+  };
 
-    this.setState({
-      input: {
-        value: "",
-        isCorrect: false,
-      },
-    });
-
-    this.setRandomEmoji();
-  }
-
-  handleInput(event: React.ChangeEvent<HTMLInputElement>) {
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const userInput = event.target.value.replace(" ", "_").toLowerCase();
-
-    this.setState({
-      input: {
-        value: userInput,
-        isCorrect: this.state.currentEmoji.names.includes(userInput),
-      },
+    setInput({
+      value: userInput,
+      isCorrect: currentEmoji.names.includes(userInput),
     });
-  }
+  };
 
-  handleToggle() {
-    this.setState({
-      showAnswer: !this.state.showAnswer,
-    });
-  }
+  const handleToggle = () => {
+    setShowAnswer(!showAnswer);
+  };
 
-  handleClear() {
-    this.setState({
-      input: {
-        value: "",
-        isCorrect: false,
-      },
-    });
-  }
+  const handleClear = () => {
+    setInput({ value: "", isCorrect: false });
+  };
+
+  const isEmpty = input.value === "";
+  const isCorrect = input.isCorrect;
+
+  return (
+    <Container maxWidth="xs" sx={{ flexGrow: "1" }}>
+      {/* Emoji picture */}
+      <Box sx={{ py: 4, width: "auto", aspectRatio: "1" }}>
+        <img
+          width="100%"
+          loading="lazy"
+          src={createEmoji(currentEmoji.codePoint)}
+        ></img>
+      </Box>
+
+      {/* Emoji form input */}
+      <Box sx={{ pb: 4 }}>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            variant="outlined"
+            fullWidth
+            helperText="Press return to try another"
+            label="Guess the emoji"
+            value={input.value}
+            onChange={handleInput}
+            error={!isCorrect && !isEmpty}
+            slotProps={{
+              input: {
+                autoCapitalize: "none",
+                endAdornment: (
+                  <InputAdornment position="end">
+                    {isCorrect && <Check />}
+                    {!isEmpty && !isCorrect && (
+                      <IconButton onClick={handleClear}>
+                        <Close />
+                      </IconButton>
+                    )}
+                  </InputAdornment>
+                ),
+              },
+            }}
+          ></TextField>
+        </form>
+      </Box>
+
+      {/* Helper control to show answer */}
+      <Box sx={{ pb: 2, textAlign: "center" }}>
+        <FormControlLabel
+          control={<Switch size="small" onChange={handleToggle} />}
+          label="Show answer?"
+        />
+      </Box>
+
+      {/* The answer, if enabled */}
+      {showAnswer && (
+        <Box sx={{ textAlign: "center" }}>
+          <Typography variant="caption">{currentEmoji.names[0]}</Typography>
+        </Box>
+      )}
+    </Container>
+  );
 }
