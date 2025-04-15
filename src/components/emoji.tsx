@@ -13,8 +13,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 
 export default function Emoji() {
   const getEmoji = () => {
-    const possibleEmojis = emojiDatasource.filter((e) => e.sort_order !== 152); // Filter out eye in speech bubble. See: https://git.io/JDj18
-    return possibleEmojis[Math.floor(Math.random() * possibleEmojis.length)];
+    return emojiDatasource[Math.floor(Math.random() * emojiDatasource.length)];
   };
 
   const emoji = getEmoji();
