@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { Close, Check } from "@mui/icons-material";
 import emojiDatasource from "emoji-datasource/emoji_pretty.json";
 import twemoji from "@twemoji/api";
