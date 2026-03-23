@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { Close, Check } from "@mui/icons-material";
-import emojiDatasource from "emoji-datasource/emoji_pretty.json";
-import twemoji from "@twemoji/api";
-import Container from "@mui/material/Container";
+import { Check, Close } from "@mui/icons-material";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
+import Container from "@mui/material/Container";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
+import Switch from "@mui/material/Switch";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import twemoji from "@twemoji/api";
+import emojiDatasource from "emoji-datasource/emoji_pretty.json" with { type: "json" };
+import React, { useState } from "react";
 
 export default function Emoji() {
   const getEmoji = () => {

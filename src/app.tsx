@@ -1,6 +1,5 @@
-import React from "react";
-import Emoji from "./components/emoji";
-import Footer from "./components/footer";
+import Emoji from "./components/emoji.js";
+import Footer from "./components/footer.js";
 
 export default function App() {
   return (
